@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a688dc100b71127a2562ca2a86825073",
+    "revision": "3a99fb2e70a2ef1ab3bae69c2318f9fc",
     "url": "/react-music-share/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-music-share/static/js/2.3c3da014.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "12c7767b65ba7deb6e81",
-    "url": "/react-music-share/static/js/main.7466f90c.chunk.js"
+    "revision": "de60e211b5c87c559979",
+    "url": "/react-music-share/static/js/main.b5f793b3.chunk.js"
   },
   {
     "revision": "a425357715c217585a3d",
