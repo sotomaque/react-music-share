@@ -1,9 +1,9 @@
 import React from 'react';
 import { CircularProgress, Card, CardMedia, CardContent, Typography, CardActions, IconButton, makeStyles } from '@material-ui/core';
-import { PlayArrow, Save, Pause } from '@material-ui/icons';
+import { PlayArrow, Delete, Pause, AddBoxOutlined } from '@material-ui/icons';
 import { useSubscription, useMutation } from '@apollo/react-hooks';
 import { GET_SONGS } from '../graphql/subscriptions';
-import { ADD_OR_REMOVE_FROM_QUEUE } from '../graphql/mutations';
+import { ADD_OR_REMOVE_FROM_QUEUE, DELETE_SONG } from '../graphql/mutations';
 import { SongContext } from '../App';
 
 function SongList() {
@@ -67,6 +67,7 @@ function Song({ song }) {
     });
     const { thumbnail, title, artist } = song;
     const [currentSongPlaying, setCurrentSongPlaying] = React.useState(false);
+    const [deleteSong] = useMutation(DELETE_SONG);
 
     React.useEffect(() => {
        const isSongPlaying = state.isPlaying && id === state.song.id;
@@ -82,6 +83,18 @@ function Song({ song }) {
         addOrRemoveFromQueue({
             variables: { input: {...song, __typename: 'Song' } }
         })
+    }
+
+    async function handleDeleteSong() {
+        try {
+            await deleteSong({
+                variables: {
+                    id: id
+                }
+            })
+        } catch (error) {
+            console.error("ERROR DELETING SONG", error)
+        }
     }
 
     return (
@@ -101,8 +114,11 @@ function Song({ song }) {
                         <IconButton onClick={handleTogglePlay} size="small" color="primary">
                             {currentSongPlaying ? <Pause /> : <PlayArrow /> }
                         </IconButton>
-                        <IconButton onClick={handleAddOrRemoveFromQueue} size="small" color="secondary">
-                            <Save />
+                        <IconButton onClick={handleAddOrRemoveFromQueue} size="small">
+                            <AddBoxOutlined/>
+                        </IconButton>
+                        <IconButton onClick={handleDeleteSong} size="small" >
+                            <Delete color="error" />
                         </IconButton>
                     </CardActions>
                 </div>

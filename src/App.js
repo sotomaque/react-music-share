@@ -9,12 +9,12 @@ import songReducer from './reducer';
 
 export const SongContext = React.createContext({
   song: {
-    artist: "PINKFONG",
-    duration: 137,
-    id: "d41469e5-e023-4a40-95c3-0061fa22efe5",
-    thumbnail: "http://img.youtube.com/vi/XqZsoesa55w/0.jpg",
-    title: "Baby Shark Dance | Sing and Dance! |",
-    url: "https://www.youtube.com/watch?v=XqZsoesa55w"
+    artist: undefined,
+    duration: undefined,
+    id: undefined,
+    thumbnail: undefined,
+    title: undefined,
+    url: undefined
   },
   isPlaying: false
 });
@@ -32,7 +32,7 @@ function App() {
         <Header />
       </Hidden>
       
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{paddingLeft: '15px'}}>
         <Grid style={{
           paddingTop: greaterThanSm ? '80px' : 10
         }} item xs={12} md={7}>

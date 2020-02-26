@@ -9,7 +9,17 @@ export const ADD_OR_REMOVE_FROM_QUEUE = gql`
 export const ADD_SONG = gql`
     mutation addSong($title: String!, $artist: String!, $thumbnail: String!, $duration: Float!, $url: String!) {
         insert_songs(objects: {title: $title, artist: $artist, thumbnail: $thumbnail, duration: $duration, url: $url}) {
-        affected_rows
+            affected_rows
+        }
+    }
+`
+
+export const DELETE_SONG = gql`
+    mutation deleteSong($id:uuid) {
+        delete_songs(where: {id: {_eq: $id }}) {
+            returning {
+                title
+            }
         }
     }
   
