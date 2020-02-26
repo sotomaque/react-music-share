@@ -1,7 +1,10 @@
 import React from 'react';
 import QueuedSongList from './QueuedSongList';
 import { Card, CardContent, Typography, IconButton, Slider, CardMedia, makeStyles } from "@material-ui/core";
-import { SkipPrevious, PlayArrow, SkipNext } from '@material-ui/icons';
+import { SkipPrevious, PlayArrow, SkipNext, Pause } from '@material-ui/icons';
+import { SongContext } from '../App';
+import { useQuery } from '@apollo/react-hooks';
+import { GET_QUEUED_SONGS } from '../graphql/queries';
 
 const useStyles = makeStyles(themes => ({
     container: {
@@ -32,25 +35,32 @@ const useStyles = makeStyles(themes => ({
 }))
 
 function SongPlayer() {
-    const classes = useStyles()
+    const { data } = useQuery(GET_QUEUED_SONGS);
+    const { state, dispatch } = React.useContext(SongContext);
+    const classes = useStyles();
+
+    function handleTogglePlay() {
+        dispatch(state.isPlaying ? {type: "PAUSE_SONG"} : { type: "PLAY_SONG" });
+    }
+
     return (
         <>
             <Card variant="outlined" className={classes.container}>
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
                         <Typography variant="h5" component="h3">
-                            Title
+                            { state.song.title }
                         </Typography>
                         <Typography variant="subtitle1" component="p" color="textSecondary">
-                            Artist
+                            { state.song.artist }
                         </Typography>
                     </CardContent>
                     <div className={classes.controls}>
                         <IconButton>
                             <SkipPrevious />
                         </IconButton>
-                        <IconButton>
-                            <PlayArrow className={classes.playIcon} />
+                        <IconButton onClick={handleTogglePlay}>
+                            {state.isPlaying ? <Pause className={classes.playIcon} /> : <PlayArrow className={classes.playIcon} />}
                         </IconButton>
                         <IconButton>
                             <SkipNext />
@@ -63,10 +73,10 @@ function SongPlayer() {
                 </div>
                 <CardMedia
                     className={classes.thumbnail}
-                    image="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault_live.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBmBdHg7yVILELBl9RL_IUp5d2bwg"
+                    image={state.song.thumbnail}
                 />
             </Card>
-            <QueuedSongList />
+            <QueuedSongList queue={data.queue} />
         </>
     );
 }

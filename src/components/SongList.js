@@ -1,8 +1,10 @@
 import React from 'react';
 import { CircularProgress, Card, CardMedia, CardContent, Typography, CardActions, IconButton, makeStyles } from '@material-ui/core';
-import { PlayArrow, Save } from '@material-ui/icons';
-import { useSubscription } from '@apollo/react-hooks';
+import { PlayArrow, Save, Pause } from '@material-ui/icons';
+import { useSubscription, useMutation } from '@apollo/react-hooks';
 import { GET_SONGS } from '../graphql/subscriptions';
+import { ADD_OR_REMOVE_FROM_QUEUE } from '../graphql/mutations';
+import { SongContext } from '../App';
 
 function SongList() {
     const { data, loading, error } = useSubscription(GET_SONGS);
@@ -55,9 +57,32 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Song({ song }) {
+    const { id } = song;
+    const { state, dispatch } = React.useContext(SongContext);
     const classes = useStyles();
-
+    const [addOrRemoveFromQueue] = useMutation(ADD_OR_REMOVE_FROM_QUEUE, {
+        onCompleted: data => {
+            localStorage.setItem('queue', JSON.stringify(data.addOrRemoveFromQueue))
+        }
+    });
     const { thumbnail, title, artist } = song;
+    const [currentSongPlaying, setCurrentSongPlaying] = React.useState(false);
+
+    React.useEffect(() => {
+       const isSongPlaying = state.isPlaying && id === state.song.id;
+       setCurrentSongPlaying(isSongPlaying);
+    }, [id, state.song.id, state.isPlaying]);
+
+    function handleTogglePlay() {
+        dispatch({ type: "SET_SONG", payload: { song }});
+        dispatch(state.isPlaying ? {type: "PAUSE_SONG"} : { type: "PLAY_SONG" });
+    }
+
+    function handleAddOrRemoveFromQueue() {
+        addOrRemoveFromQueue({
+            variables: { input: {...song, __typename: 'Song' } }
+        })
+    }
 
     return (
         <Card className={classes.container}>
@@ -73,8 +98,12 @@ function Song({ song }) {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <IconButton size="small" color="primary"><PlayArrow /></IconButton>
-                        <IconButton size="small" color="secondary"><Save /></IconButton>
+                        <IconButton onClick={handleTogglePlay} size="small" color="primary">
+                            {currentSongPlaying ? <Pause /> : <PlayArrow /> }
+                        </IconButton>
+                        <IconButton onClick={handleAddOrRemoveFromQueue} size="small" color="secondary">
+                            <Save />
+                        </IconButton>
                     </CardActions>
                 </div>
             </div>
