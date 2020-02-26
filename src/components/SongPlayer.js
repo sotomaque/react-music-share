@@ -93,8 +93,6 @@ function SongPlayer() {
         }
     }
 
-    console.log(state.song)
-
     return (
         <>
             {
