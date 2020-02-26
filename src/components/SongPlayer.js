@@ -93,9 +93,12 @@ function SongPlayer() {
         }
     }
 
+    console.log(state.song)
+
     return (
         <>
-            <Card variant="outlined" className={classes.container}>
+            {
+                state.song.artist && <Card variant="outlined" className={classes.container}>
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
                         <Typography variant="h5" component="h3">
@@ -142,6 +145,8 @@ function SongPlayer() {
                     image={state.song.thumbnail}
                 />
             </Card>
+            }
+            
             <QueuedSongList queue={data.queue} />
         </>
     );

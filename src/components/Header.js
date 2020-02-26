@@ -16,7 +16,7 @@ function Header() {
             <Toolbar>
                 <HeadsetTwoTone />
                 <Typography variant="h6" component="h1" className={classes.title}>
-                    <span>🔥🎵</span>
+                    <span role="img">🔥🎵</span>
                 </Typography>
             </Toolbar>
         </AppBar>
