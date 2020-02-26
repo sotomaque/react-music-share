@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/react-music-share/static/js/main.b5f793b3.chunk.js",
-    "main.js.map": "/react-music-share/static/js/main.b5f793b3.chunk.js.map",
+    "main.js": "/react-music-share/static/js/main.eb90f874.chunk.js",
+    "main.js.map": "/react-music-share/static/js/main.eb90f874.chunk.js.map",
     "runtime-main.js": "/react-music-share/static/js/runtime-main.94f4552b.js",
     "runtime-main.js.map": "/react-music-share/static/js/runtime-main.94f4552b.js.map",
     "static/js/2.3c3da014.chunk.js": "/react-music-share/static/js/2.3c3da014.chunk.js",
     "static/js/2.3c3da014.chunk.js.map": "/react-music-share/static/js/2.3c3da014.chunk.js.map",
     "index.html": "/react-music-share/index.html",
-    "precache-manifest.07011443a2fcd9dfcbfe7d90558cec32.js": "/react-music-share/precache-manifest.07011443a2fcd9dfcbfe7d90558cec32.js",
+    "precache-manifest.d7be41d0a32c6a5d5df399305602701d.js": "/react-music-share/precache-manifest.d7be41d0a32c6a5d5df399305602701d.js",
     "service-worker.js": "/react-music-share/service-worker.js",
     "static/js/2.3c3da014.chunk.js.LICENSE.txt": "/react-music-share/static/js/2.3c3da014.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.94f4552b.js",
     "static/js/2.3c3da014.chunk.js",
-    "static/js/main.b5f793b3.chunk.js"
+    "static/js/main.eb90f874.chunk.js"
   ]
 }
