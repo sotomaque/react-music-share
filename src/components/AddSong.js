@@ -61,6 +61,7 @@ function AddSong() {
             [name]: value
         }));
     }
+
     function handleCloseDialog() {
         setDialog(false);
     }
@@ -129,11 +130,11 @@ function AddSong() {
     }
 
     function handleInputError(field) {
-        return error?.graphQLErrors[0]?.extensions?.path.includes(field)
+        return error?.graphQLErrors[0]?.extensions?.path.includes(field) || error?.networkError?.extensions?.path.includes(field);
     }
 
     const { thumbnail, title, artist } = song;
-
+    console.dir({error})
     return (
         <div className={classes.container}>
             <Dialog 
@@ -155,7 +156,7 @@ function AddSong() {
                         label="Title"
                         fullWidth
                         error={handleInputError('title')}
-                        helperText={handleInputError('title') && "Fill out field"}
+                        helperText={handleInputError('title') && 'Fill out field'}
                     />
                     <TextField
                         value={artist}
@@ -165,7 +166,7 @@ function AddSong() {
                         label="Artist"
                         fullWidth
                         error={handleInputError('artist')}
-                        helperText={handleInputError('artist') && "Fill out field"}
+                        helperText={handleInputError('artist') && 'Fill out field'}
                     />
                     <TextField
                         value={thumbnail}
@@ -175,7 +176,7 @@ function AddSong() {
                         label="Thumbnail"
                         fullWidth
                         error={handleInputError('thumbnail')}
-                        helperText={handleInputError('thumbnail') && "Fill out field"}
+                        helperText={handleInputError('thumbnail') && 'Fill out field'}
                     />
                 </DialogContent>
                 <DialogActions>
