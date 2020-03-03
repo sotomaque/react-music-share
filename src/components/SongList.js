@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress, Card, CardMedia, CardContent, Typography, CardActions, IconButton, makeStyles } from '@material-ui/core';
+import { CircularProgress, Card, CardMedia, CardContent, Typography, CardActions, IconButton, makeStyles, useMediaQuery } from '@material-ui/core';
 import { PlayArrow, Delete, Pause, AddBoxOutlined } from '@material-ui/icons';
 import { useSubscription, useMutation } from '@apollo/react-hooks';
 import { GET_SONGS } from '../graphql/subscriptions';
@@ -60,15 +60,20 @@ function Song({ song }) {
     const { id } = song;
     const { state, dispatch } = React.useContext(SongContext);
     const classes = useStyles();
+    const isMobile = useMediaQuery(theme => theme.breakpoints.down('md'));
+
     const [addOrRemoveFromQueue] = useMutation(ADD_OR_REMOVE_FROM_QUEUE, {
         onCompleted: data => {
             localStorage.setItem('queue', JSON.stringify(data.addOrRemoveFromQueue))
+            if (isMobile) {
+                alert('Song Added to Playlist');
+            }
         }
     });
     const { thumbnail, title, artist } = song;
     const [currentSongPlaying, setCurrentSongPlaying] = React.useState(false);
     const [deleteSong] = useMutation(DELETE_SONG);
-
+    
     React.useEffect(() => {
        const isSongPlaying = state.isPlaying && id === state.song.id;
        setCurrentSongPlaying(isSongPlaying);
